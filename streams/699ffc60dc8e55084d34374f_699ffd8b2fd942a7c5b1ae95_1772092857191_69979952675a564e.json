@@ -1,0 +1,13 @@
+{
+  "name": "Ram_service",
+  "source": "rtsp://admin:password@192.168.1.100:554/stream/main",
+  "sourceOnDemand": true,
+  "sourceProtocol": "tcp",
+  "record": false,
+  "runOnInit": "mkdir -p streams/699ffc60dc8e55084d34374f_699ffd8b2fd942a7c5b1ae95_1772092857191_69979952675a564e",
+  "runOnDemand": "echo \"Stream started for service\"",
+  "runOnDemandClose": "echo \"Stream ended for service\"",
+  "authentication": true,
+  "publishUser": "699ffc60dc8e55084d34374f",
+  "publishPass": "699ffc60dc8e55084d34374f_699ffd8b2fd942a7c5b1ae95_1772092857191_69979952675a564e"
+}

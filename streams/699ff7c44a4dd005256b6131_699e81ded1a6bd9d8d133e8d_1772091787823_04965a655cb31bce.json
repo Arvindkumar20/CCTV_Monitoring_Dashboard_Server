@@ -1,0 +1,13 @@
+{
+  "name": "Ram_Main gate",
+  "source": "rtsp://admin:password@192.168.1.100:554/stream",
+  "sourceOnDemand": true,
+  "sourceProtocol": "tcp",
+  "record": false,
+  "runOnInit": "mkdir -p streams/699ff7c44a4dd005256b6131_699e81ded1a6bd9d8d133e8d_1772091787823_04965a655cb31bce",
+  "runOnDemand": "echo \"Stream started for Main gate\"",
+  "runOnDemandClose": "echo \"Stream ended for Main gate\"",
+  "authentication": true,
+  "publishUser": "699ff7c44a4dd005256b6131",
+  "publishPass": "699ff7c44a4dd005256b6131_699e81ded1a6bd9d8d133e8d_1772091787823_04965a655cb31bce"
+}

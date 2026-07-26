@@ -1,0 +1,13 @@
+{
+  "name": "Test_Main gate",
+  "source": "rtsp://admin:password@192.168.1.100:554/stream",
+  "sourceOnDemand": true,
+  "sourceProtocol": "tcp",
+  "record": false,
+  "runOnInit": "mkdir -p streams/699fef1f03ea63a4d04a0da7_699e81ded1a6bd9d8d133e8d_1772090005886_d2150eaa1d81bc0b",
+  "runOnDemand": "echo \"Stream started for Main gate\"",
+  "runOnDemandClose": "echo \"Stream ended for Main gate\"",
+  "authentication": true,
+  "publishUser": "699fef1f03ea63a4d04a0da7",
+  "publishPass": "699fef1f03ea63a4d04a0da7_699e81ded1a6bd9d8d133e8d_1772090005886_d2150eaa1d81bc0b"
+}

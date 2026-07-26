@@ -1,0 +1,13 @@
+{
+  "name": "Ram_Back side gate",
+  "source": "rtsp://admin:password@192.168.1.100/stream:8554",
+  "sourceOnDemand": true,
+  "sourceProtocol": "tcp",
+  "record": false,
+  "runOnInit": "mkdir -p streams/699ffc60dc8e55084d34374f_699d3f354981dfd559845d34_1772092857192_a809166e88e87006",
+  "runOnDemand": "echo \"Stream started for Back side gate\"",
+  "runOnDemandClose": "echo \"Stream ended for Back side gate\"",
+  "authentication": true,
+  "publishUser": "699ffc60dc8e55084d34374f",
+  "publishPass": "699ffc60dc8e55084d34374f_699d3f354981dfd559845d34_1772092857192_a809166e88e87006"
+}

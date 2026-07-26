@@ -1,0 +1,13 @@
+{
+  "name": "Test_Back side gate",
+  "source": "rtsp://admin:password@192.168.1.100/stream:8554",
+  "sourceOnDemand": true,
+  "sourceProtocol": "tcp",
+  "record": false,
+  "runOnInit": "mkdir -p streams/699fef1f03ea63a4d04a0da7_699d3f354981dfd559845d34_1772090005885_b05725abe88ce086",
+  "runOnDemand": "echo \"Stream started for Back side gate\"",
+  "runOnDemandClose": "echo \"Stream ended for Back side gate\"",
+  "authentication": true,
+  "publishUser": "699fef1f03ea63a4d04a0da7",
+  "publishPass": "699fef1f03ea63a4d04a0da7_699d3f354981dfd559845d34_1772090005885_b05725abe88ce086"
+}

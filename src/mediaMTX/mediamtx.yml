@@ -1,0 +1,23 @@
+# MediaMTX Configuration
+rtsp: true
+rtspPort: 8554
+rtmp: true
+rtmpPort: 1935
+hls: true
+hlsPort: 8888
+hlsSegmentCount: 5
+hlsSegmentDuration: 1
+webrtc: true
+webrtcPort: 8889
+
+# Path configurations
+paths:
+  all:
+    source: publisher
+    sourceOnDemand: true
+    publishUser: "{publisher}"
+    publishPass: "{publisher}"
+    readUser: "any"
+    runOnInit: "echo 'Stream initialized'"
+    runOnDemand: "echo 'Stream started'"
+    runOnDemandClose: "echo 'Stream ended'"
