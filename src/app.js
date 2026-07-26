@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 console.log(process.env.MONGODB_URI);
 import { errorHandler, notFound } from "./middlewares/errorHandler.js";
-import { apiLimiter, authLimiter } from "./utils/rateLimiting.js";
+// import { apiLimiter, authLimiter } from "./utils/rateLimiting.js";
 
 // Import routes
 import authRoutes from "./routes/auth.routes.js";
@@ -18,7 +18,7 @@ import { cameraRoter } from "./routes/camera.routes.js";
 import { guardianRouter } from "./routes/guardian.routes.js";
 import { dashboardRouter } from "./routes/dashboard.routes.js";
 import { streamRouter } from "./routes/stream.routes.js";
-import { guardianRoute } from "./routes/guardian.js";
+// import { guardianRoute } from "./routes/guardian.js";
 // import { sanitizeInputs } from "./middlewares/sanitize.js";
 
 // Load env vars
@@ -86,7 +86,7 @@ app.use("/api/categories", categoryRouter);
 app.use("/api/sub-categories", subCategoryRouter);
 app.use("/api/nested-subcategories", nestedSubCategoryRoutes);
 app.use("/api/cameras", cameraRoter);
-app.use("/api/guardian", guardianRoute);
+// app.use("/api/guardian", guardianRoute);
 app.use("/api/guardians", guardianRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/streams", streamRouter);

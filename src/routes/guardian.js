@@ -1,48 +1,46 @@
 // routes/guardian.routes.js
 import express from "express";
-import { protect, restrictTo } from "../middlewares/auth.middleware.js";
-import { validate } from "../middlewares/validate.middleware.js";
+import { validate } from "../middlewares/validation.middleware.js";
 import {
   createGuardian,
   getAllGuardians,
   getGuardianById,
   updateGuardian,
   deleteGuardian,
-  bulkDeleteGuardians,
+  // bulkDeleteGuardians,
   toggleGuardianStatus,
   unlockGuardianAccount,
   getGuardianStudents,
   addStudentToGuardian,
   removeStudentFromGuardian,
-  getGuardianLoginHistory,
-  getGuardianDevices,
-  removeGuardianDevice,
-  resetGuardianPassword,
-  getGuardianStatistics,
+  // getGuardianLoginHistory,
+  // removeGuardianDevice,
+  // resetGuardianPassword,
+  // getGuardianStatistics,
 } from "../controllers/guardian.controller.js";
 import {
-  createGuardianSchema,
+  createGuardianValidation,
   updateGuardianSchema,
-  addStudentSchema,
-  resetPasswordSchema,
+ 
+  // resetPasswordSchema,
 } from "../validations/guardian.validation.js";
 
 const router = express.Router();
 
 // Protect all routes after this middleware
-router.use(protect);
+
 
 // Statistics route (before /:id routes)
-router.get("/statistics", restrictTo("admin", "superadmin"), getGuardianStatistics);
+// router.get("/statistics", restrictTo("admin", "superadmin"), getGuardianStatistics);
 
 // Bulk operations
-router.post("/bulk-delete", restrictTo("admin", "superadmin"), bulkDeleteGuardians);
+// router.post("/bulk-delete", restrictTo("admin", "superadmin"), bulkDeleteGuardians);
 
 // CRUD operations
 router
   .route("/")
   .get(restrictTo("admin", "superadmin", "teacher"), getAllGuardians)
-  .post(restrictTo("admin", "superadmin"), validate(createGuardianSchema), createGuardian);
+  .post(restrictTo("admin", "superadmin"), validate(createGuardianValidation), createGuardian);
 
 router
   .route("/:id")
@@ -65,16 +63,16 @@ router.post(
 router.delete("/:id/students/:studentId", restrictTo("admin", "superadmin"), removeStudentFromGuardian);
 
 // Login history and devices
-router.get("/:id/login-history", restrictTo("admin", "superadmin"), getGuardianLoginHistory);
-router.get("/:id/devices", restrictTo("admin", "superadmin"), getGuardianDevices);
-router.delete("/:id/devices/:deviceId", restrictTo("admin", "superadmin"), removeGuardianDevice);
+// router.get("/:id/login-history", restrictTo("admin", "superadmin"), getGuardianLoginHistory);
+// router.get("/:id/devices", restrictTo("admin", "superadmin"), getGuardianDevices);
+// router.delete("/:id/devices/:deviceId", restrictTo("admin", "superadmin"), removeGuardianDevice);
 
 // Password management
-router.post(
-  "/:id/reset-password",
-  restrictTo("admin", "superadmin"),
-  validate(resetPasswordSchema),
-  resetGuardianPassword
-);
+// router.post(
+//   "/:id/reset-password",
+//   restrictTo("admin", "superadmin"),
+//   validate(resetPasswordSchema),
+//   // resetGuardianPassword
+// );
 
 export const guardianRoute= router;
