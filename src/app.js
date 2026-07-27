@@ -55,7 +55,7 @@ app.use(
 // Enable CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "https://startling-narwhal-136d28.netlify.app/",
+    origin: process.env.CORS_ORIGIN || "https://startling-narwhal-136d28.netlify.app",
     credentials: true, // Important for cookies
     optionsSuccessStatus: 200,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],

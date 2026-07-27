@@ -85,7 +85,7 @@ export const decodeToken = (token) => {
  */
 export const setTokenCookies = (res, accessToken, refreshToken) => {
   const isProduction = env.NODE_ENV === 'production';
-  const sameSite = isProduction ? 'strict' : 'lax';
+  const sameSite = isProduction ? 'None' : 'lax';
 
   // Access token cookie
   res.cookie('accessToken', accessToken, {
@@ -94,7 +94,7 @@ export const setTokenCookies = (res, accessToken, refreshToken) => {
     sameSite,
     maxAge: 15 * 60 * 1000, // 15 minutes
     path: '/',
-    domain: isProduction ? '.yourdomain.com' : undefined,
+    // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
   // Refresh token cookie
@@ -103,8 +103,9 @@ export const setTokenCookies = (res, accessToken, refreshToken) => {
     secure: isProduction,
     sameSite,
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    path: '/api/auth/refresh-token', // Only sent to refresh endpoint
-    domain: isProduction ? '.yourdomain.com' : undefined,
+    // path: '/api/auth/refresh-token',
+        path: '/', // Only nt // Only sent to refresh endpoint
+    // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
   // Optional: Non-httpOnly token for client-side (if needed)
@@ -128,14 +129,15 @@ export const clearTokenCookies = (res) => {
     httpOnly: true,
     secure: isProduction,
     path: '/',
-    domain: isProduction ? '.yourdomain.com' : undefined,
+    // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
   res.clearCookie('refreshToken', {
     httpOnly: true,
     secure: isProduction,
-    path: '/api/auth/refresh-token',
-    domain: isProduction ? '.yourdomain.com' : undefined,
+    // path: '/api/auth/refresh-token',
+        path: '/',
+    // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
   res.clearCookie('accessTokenClient', {
