@@ -92,8 +92,9 @@ export const changePassword = asyncHandler(async (req, res) => {
  */
 export const refreshToken = asyncHandler(async (req, res) => {
   const { refreshToken: token } = req.cookies;
+  console.log(token);
+  
   const ipAddress = req.ip || req.connection.remoteAddress;
-
   if (!token) {
     throw new AppError('Refresh token not found', 401);
   }

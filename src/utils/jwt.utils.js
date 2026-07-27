@@ -1,70 +1,63 @@
-import jwt from 'jsonwebtoken';
-import { env } from '../config/env.js';
-import logger from '../config/logger.js';
-import crypto from 'crypto';
-
+import jwt from "jsonwebtoken";
+import logger from "../config/logger.js";
+import crypto from "crypto";
+import "dotenv/config";
 /**
  * Generate access and refresh tokens
  */
+
 export const generateTokens = (userId, role, sessionId = null) => {
   try {
-    const payload = { 
-      userId, 
+    const payload = {
+      userId,
       role,
-      sessionId: sessionId || crypto.randomBytes(16).toString('hex'),
+      sessionId: sessionId || crypto.randomBytes(16).toString("hex"),
     };
 
     // Access token - short lived
-    const accessToken = jwt.sign(
-      payload,
-      env.JWT_SECRET,
-      { 
-        expiresIn: env.JWT_ACCESS_EXPIRE,
-        audience: 'your-app-audience',
-        issuer: 'your-app-issuer',
-      }
-    );
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_ACCESS_EXPIRE || "1d",
+      audience: "your-app-audience",
+      issuer: "your-app-issuer",
+    });
 
     // Refresh token - long lived
-    const refreshToken = jwt.sign(
-      payload,
-      env.JWT_REFRESH_SECRET,
-      { 
-        expiresIn: env.JWT_REFRESH_EXPIRE,
-        audience: 'your-app-audience',
-        issuer: 'your-app-issuer',
-      }
-    );
+    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
+      expiresIn: process.env.JWT_REFRESH_EXPIRE || "7d",
+      audience: "your-app-audience",
+      issuer: "your-app-issuer",
+    });
 
     return { accessToken, refreshToken, sessionId: payload.sessionId };
   } catch (error) {
-    logger.error('Token generation error', { error: error.message, userId });
-    throw new Error('Failed to generate tokens');
+    console.log(error);
+    logger.error("Token generation error", { error: error.message, userId });
+    throw new Error("Failed to generate tokens");
   }
 };
 
 /**
  * Verify JWT token
  */
-export const verifyToken = (token, secret = env.JWT_SECRET) => {
+export const verifyToken = (token, secret = process.env.JWT_SECRET) => {
   try {
     const decoded = jwt.verify(token, secret, {
-      audience: 'your-app-audience',
-      issuer: 'your-app-issuer',
+      audience: "your-app-audience",
+      issuer: "your-app-issuer",
     });
-    
+
     return decoded;
   } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      logger.debug('Token expired');
+    if (error.name === "TokenExpiredError") {
+      logger.debug("Token expired");
       return null;
     }
-    if (error.name === 'JsonWebTokenError') {
-      logger.debug('Invalid token', { error: error.message });
+    if (error.name === "JsonWebTokenError") {
+      logger.debug("Invalid token", { error: error.message });
       return null;
     }
-    
-    logger.error('Token verification error', { error: error.message });
+
+    logger.error("Token verification error", { error: error.message });
     return null;
   }
 };
@@ -84,33 +77,34 @@ export const decodeToken = (token) => {
  * Set token cookies in response
  */
 export const setTokenCookies = (res, accessToken, refreshToken) => {
-  const isProduction = env.NODE_ENV === 'production';
-  const sameSite = isProduction ? 'None' : 'lax';
+  console.log(accessToken);
+  const isProduction = process.env.NODE_ENV === "production" || "developement";
+  const sameSite = isProduction ? "None" : "lax";
 
   // Access token cookie
-  res.cookie('accessToken', accessToken, {
+  res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: isProduction,
     sameSite,
     maxAge: 15 * 60 * 1000, // 15 minutes
-    path: '/',
+    path: "/",
     // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
   // Refresh token cookie
-  res.cookie('refreshToken', refreshToken, {
+  res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: isProduction,
     sameSite,
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    // path: '/api/auth/refresh-token',
-        path: '/', // Only nt // Only sent to refresh endpoint
+    path: "/api/auth/refresh-token",
+    // path: "/", // Only nt // Only sent to refresh endpoint
     // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
   // Optional: Non-httpOnly token for client-side (if needed)
   if (!isProduction) {
-    res.cookie('accessTokenClient', accessToken, {
+    res.cookie("accessTokenClient", accessToken, {
       httpOnly: false,
       secure: false,
       sameSite,
@@ -123,27 +117,27 @@ export const setTokenCookies = (res, accessToken, refreshToken) => {
  * Clear token cookies
  */
 export const clearTokenCookies = (res) => {
-  const isProduction = env.NODE_ENV === 'production';
+  const isProduction = process.env.NODE_ENV === "production";
 
-  res.clearCookie('accessToken', {
+  res.clearCookie("accessToken", {
     httpOnly: true,
     secure: isProduction,
-    path: '/',
+    path: "/",
     // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
-  res.clearCookie('refreshToken', {
+  res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: isProduction,
-    // path: '/api/auth/refresh-token',
-        path: '/',
+    path: "/api/auth/refresh-token",
+    // path: "/",
     // domain: isProduction ? process.env.CLIENT_URL : undefined,
   });
 
-  res.clearCookie('accessTokenClient', {
+  res.clearCookie("accessTokenClient", {
     httpOnly: false,
-    secure: false,
-    path: '/',
+    // secure: false,
+    path: "/",
   });
 };
 
@@ -153,11 +147,11 @@ export const clearTokenCookies = (res) => {
 export const extractToken = (req) => {
   // Check cookies first
   let token = req.cookies?.accessToken;
-  
+
   // Check Authorization header
   if (!token && req.headers.authorization) {
     const authHeader = req.headers.authorization;
-    if (authHeader.startsWith('Bearer ')) {
+    if (authHeader.startsWith("Bearer ")) {
       token = authHeader.substring(7);
     } else {
       token = authHeader;
@@ -176,6 +170,7 @@ export const extractToken = (req) => {
  * Refresh token validation
  */
 export const isValidRefreshToken = (token) => {
+  console.log(token);
   try {
     const decoded = jwt.verify(token, env.JWT_REFRESH_SECRET);
     return !!decoded;

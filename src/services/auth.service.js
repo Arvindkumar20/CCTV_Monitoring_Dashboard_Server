@@ -156,6 +156,7 @@ console.log(userAgent)
    * Refresh access token
    */
   async refreshToken(refreshToken, ipAddress = null) {
+    
     try {
       // Verify refresh token
       const decoded = verifyToken(refreshToken, env.JWT_REFRESH_SECRET);

@@ -26,10 +26,9 @@ router.post('/login', validate(loginValidation), login);
 // Protected routes (all routes below this will require authentication)
 router.post('/refresh-token', refreshToken);
 router.use(authenticate);
-
-router.post('/logout', logout);
 router.get('/profile', getProfile);
 router.patch('/profile', validate(updateProfileValidation), updateProfile);
 router.post('/change-password', validate(changePasswordValidation), changePassword);
+router.post('/logout', logout);
 
 export default router;
