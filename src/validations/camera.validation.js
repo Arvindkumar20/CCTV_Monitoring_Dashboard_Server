@@ -45,9 +45,9 @@ export const createCameraValidation = [
       }
 
       // Check if user has access to this category
-      if (category.createdBy.toString() !== req.user?.userId && req.user?.role !== "admin") {
-        throw new Error("You do not have access to this category");
-      }
+      // if (category.createdBy.toString() !== req.user?.userId) {
+      //   throw new Error("You do not have access to this category");
+      // }
 
       return true;
     }),
@@ -63,14 +63,14 @@ export const createCameraValidation = [
         }
 
         // Verify sub category belongs to selected main category
-        if (subCategory.mainCategoryId.toString() !== req.body.mainCategoryId) {
-          throw new Error("Sub category must belong to the selected main category");
-        }
+        // if (subCategory.mainCategoryId.toString() !== req.body.mainCategoryId) {
+        //   throw new Error("Sub category must belong to the selected main category");
+        // }
 
         // Check access
-        if (subCategory.createdBy.toString() !== req.user?.userId && req.user?.role !== "admin") {
-          throw new Error("You do not have access to this sub category");
-        }
+        // if (subCategory.createdBy.toString() !== req.user?.userId) {
+        //   throw new Error("You do not have access to this sub category");
+        // }
       }
       return true;
     }),

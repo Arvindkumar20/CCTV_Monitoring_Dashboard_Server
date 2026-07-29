@@ -10,6 +10,7 @@ class CameraService {
   /**
    * Create a new camera
    */
+  
   async createCamera(data, userId) {
     // Verify main category exists
     const mainCategory = await Category.findById(data.mainCategoryId);

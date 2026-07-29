@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
         values: ["admin", "principal", "teacher", "security"],
         message: "{VALUE} is not a valid role",
       },
-      default: "admin",
+      default: "principal",
       index: true,
     },
     schoolName: {
