@@ -656,8 +656,8 @@ class CameraService {
 
     const statusCycle = {
       active: "inactive",
-      inactive: "maintenance",
-      maintenance: "active",
+      inactive: "active",
+      // maintenance: "active",
     };
 
     camera.status = statusCycle[camera.status];

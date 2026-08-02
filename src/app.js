@@ -8,7 +8,6 @@ import "dotenv/config";
 console.log(process.env.MONGODB_URI);
 import { errorHandler, notFound } from "./middlewares/errorHandler.js";
 
-
 // Import routes
 import authRoutes from "./routes/auth.routes.js";
 import { categoryRouter } from "./routes/category.routes.js";
@@ -18,6 +17,7 @@ import { cameraRoter } from "./routes/camera.routes.js";
 import { guardianRouter } from "./routes/guardian.routes.js";
 import { dashboardRouter } from "./routes/dashboard.routes.js";
 import { streamRouter } from "./routes/stream.routes.js";
+import { settingsRoutes } from "./routes/settings.routes.js";
 // import { guardianRoute } from "./routes/guardian.js";
 // import { sanitizeInputs } from "./middlewares/sanitize.js";
 
@@ -53,7 +53,7 @@ app.use(
 // Enable CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN ,
+    origin: process.env.CORS_ORIGIN,
     credentials: true, // Important for cookies
     optionsSuccessStatus: 200,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -109,7 +109,7 @@ app.get("/health", (req, res) => {
     version: process.env.npm_package_version || "1.0.0",
   });
 });
-
+app.use("/api/settings", settingsRoutes);
 // Test endpoint to verify auth routes are working
 app.get("/api/test", (req, res) => {
   res.status(200).json({
